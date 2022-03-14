@@ -1,0 +1,51 @@
+---
+title: "dspackage"
+authors: "Samantha Driesenga, Wendy Wang, Sonali Bola"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse) 
+library(mosaic) 
+library(purrr) 
+library(faraway)
+library(devtools) 
+library(usethis)
+```
+
+
+```{r, rounding using lapply()}
+round_if_numeric <- function(x, digits = 0) {
+  if (is.numeric(x)) round(x, digits = digits) else x
+}
+df_round2a <- function(.data, digits = 0) {
+  lapply(.data, round_if_numeric, digits = digits) |>
+    as_tibble()
+}
+```
+
+```{r}
+df_apply <- function(data, input) { 
+  lapply(data, input) |>
+    as_tibble()
+}
+
+glimpse(fat)
+demo <- df_apply(fat, floor)
+glimpse(demo)
+```
+
+```{r, test 2 conditions}
+demo_apply <- function(data, condition, exec) { 
+  lapply(data, function(x) if condition(x) exec(x) else x)
+}
+glimpse(fat) 
+test_data <- demo_apply(fat, is.numeric, round)
+glimpse(test_data)
+```
+
+```{r}
+
+```
+
